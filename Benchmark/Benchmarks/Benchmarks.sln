@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34322.80
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FolderReadSpeedBenchmark", "FolderReadSpeedBenchmark\FolderReadSpeedBenchmark.csproj", "{08A5BE3D-192D-49D1-8924-1F98DC9EC93A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FolderReadSpeedBenchmark", "FolderReadSpeedBenchmark\FolderReadSpeedBenchmark.csproj", "{08A5BE3D-192D-49D1-8924-1F98DC9EC93A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Benchmarks", "Benchmarks", "{F45EE3BE-80FC-4706-AF69-B33D14D5D345}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExternalLibraries", "ExternalLibraries", "{D8F1B87B-5357-41C7-BAB7-03A4C7E7DAC1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingService", "..\..\Solution\NewWorldFoundation\Shared\EverythingService\EverythingService.csproj", "{5386615C-5091-42EB-B94B-1ADF544CCCEE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NWF.Shared", "..\..\Solution\NewWorldFoundation\Shared\NWF.Shared\NWF.Shared.csproj", "{72FA6275-08B5-4B36-B00A-25EDD0D43651}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,10 @@ Global
 		{5386615C-5091-42EB-B94B-1ADF544CCCEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5386615C-5091-42EB-B94B-1ADF544CCCEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5386615C-5091-42EB-B94B-1ADF544CCCEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72FA6275-08B5-4B36-B00A-25EDD0D43651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72FA6275-08B5-4B36-B00A-25EDD0D43651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72FA6275-08B5-4B36-B00A-25EDD0D43651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72FA6275-08B5-4B36-B00A-25EDD0D43651}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +38,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{08A5BE3D-192D-49D1-8924-1F98DC9EC93A} = {F45EE3BE-80FC-4706-AF69-B33D14D5D345}
 		{5386615C-5091-42EB-B94B-1ADF544CCCEE} = {D8F1B87B-5357-41C7-BAB7-03A4C7E7DAC1}
+		{72FA6275-08B5-4B36-B00A-25EDD0D43651} = {D8F1B87B-5357-41C7-BAB7-03A4C7E7DAC1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AB71F5EB-8FE6-48DF-813D-FB883C2A31C3}
