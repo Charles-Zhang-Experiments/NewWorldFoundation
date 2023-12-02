@@ -1,4 +1,4 @@
-﻿namespace MWF.Shared
+﻿namespace NWF.Shared
 {
     public class Class1
     {

@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Benchmarks", "Benchmarks", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExternalLibraries", "ExternalLibraries", "{D8F1B87B-5357-41C7-BAB7-03A4C7E7DAC1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingService", "..\..\Solution\MyWorldFoundation\Shared\EverythingService\EverythingService.csproj", "{5386615C-5091-42EB-B94B-1ADF544CCCEE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EverythingService", "..\..\Solution\NewWorldFoundation\Shared\EverythingService\EverythingService.csproj", "{5386615C-5091-42EB-B94B-1ADF544CCCEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

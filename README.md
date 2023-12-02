@@ -1,8 +1,8 @@
-# My World Foundation (MWF)
+# New World Foundation (NWF)
 
 Tags: NFMS
 
-To serve more reliable and progressive construction of my world, I take data integrity very seriously, especially concerning unreliability of SSD storage and cloud services. I thus provide a heavily opinionated whole system backup scheme offering reliable, fast and cheap solution to data backup and integrity problems leveraging the best tools possible for fastest and most efficient experience. On the simplest level, this is a manual backup tool replacing iDrive/Backblaze for local-based bacup and works as compliment to OneDrive. This complies to NFMS but should provide a generic framework for configuration.
+To serve more reliable and progressive construction of a new world (virtual digital world with digital assets and projects), I take data integrity very seriously, especially concerning unreliability of SSD storage and cloud services. I thus provide a heavily opinionated whole system backup scheme offering reliable, fast and cheap solution to data backup and integrity problems leveraging the best tools possible for fastest and most efficient experience. On the simplest level, this is a manual backup tool replacing iDrive/Backblaze for local-based bacup and works as compliment to OneDrive. This complies to NFMS but should provide a generic framework for configuration.
 
 On the more advanced level, this tool provide robust indexing and in the future provide direct cloud backup integration through plugins.
 
