@@ -185,20 +185,38 @@ namespace EverythingService
             // Loop through the results, generate typed result objects
             for (uint i = 0; i < resultCount; i++)
             {
-                var sb = new StringBuilder(999);
-                Everything_GetResultFullPathName(i, sb, 999);
+                string path = GetPath(i);
                 Everything_GetResultDateModified(i, out long date_modified);
                 Everything_GetResultSize(i, out long size);
 
                 yield return new Result()
                 {
-                    DateModified = DateTime.FromFileTime(date_modified),
+                    DateModified = date_modified > 0 ? DateTime.FromFileTime(date_modified) : DateTime.MinValue,    // Some system files do have issue with this return value
                     Size = size,
                     Filename = Marshal.PtrToStringUni(Everything_GetResultFileName(i)),
-                    Path = sb.ToString(),
+                    Path = path,
                     Type = Everything_IsFolderResult(i) ? ItemType.Folder : ItemType.File
                 };
             }
+        }
+        #endregion
+
+        #region Routines
+        private const int FullpathBufSizeDefault = 260;
+        private const int FullpathBufSizeMax = FullpathBufSizeDefault * 4; // Max is 65535 but we don't expect that
+        private static string GetPath(uint resultID)
+        {
+            StringBuilder fullPath = new StringBuilder(FullpathBufSizeDefault);
+            Everything_GetResultFullPathName(resultID, fullPath, FullpathBufSizeDefault);
+            
+            // Path length warning and fixation
+            if (fullPath.Length >= 255)
+            {
+                fullPath = new StringBuilder(FullpathBufSizeMax);
+                Everything_GetResultFullPathName(resultID, fullPath, FullpathBufSizeMax);
+                Console.WriteLine($"[Warning] Filepath longer than 255: `{fullPath}` ({fullPath.Length})");
+            }
+            return fullPath.ToString();
         }
         #endregion
 
