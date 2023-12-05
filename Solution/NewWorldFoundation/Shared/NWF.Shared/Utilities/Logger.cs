@@ -6,15 +6,26 @@ namespace NWF.Shared.Utilities
     public sealed class Logger : TextWriter, IDisposable
     {
         #region Construction and Destruction
-        public Logger(string identifier = null, bool print = true, Action<string> outputHandler = null)
+        /// <summary>
+        /// Starts logging.
+        /// </summary>
+        /// <param name="identifier">Filename (without extension)</param>
+        /// <param name="print">Print while logging.</param>
+        /// <param name="generateTextbuilder">Generate string builder so caller decides what to do with log.</param>
+        /// <param name="outputHandler">Custom printing routine (when Console.WriteLine is called).</param>
+        /// <param name="doNotWriteAnything">Do not write to log file.</param>
+        public Logger(string identifier = null, bool print = true, bool generateTextbuilder = false, Action<string> outputHandler = null, bool doNotWriteAnything = false)
         {
             identifier ??= DateTime.Now.ToString("yyyy-MM-dd_hhmmss");
             OutputPath = Path.GetFullPath(identifier + ".log");
             Print = print;
             OutputHandler = outputHandler ?? DefaultOutputHandler;
+            DoNotWriteAnything = doNotWriteAnything;
 
-            if (!File.Exists(OutputPath))
+            if (!File.Exists(OutputPath) & !DoNotWriteAnything)
                 File.WriteAllText(OutputPath, string.Empty);
+            if (generateTextbuilder)
+                Builder = new();
 
             Previous = Console.Out;
             Console.SetOut(this);
@@ -27,22 +38,30 @@ namespace NWF.Shared.Utilities
         }
         private TextWriter Previous { get; }
         private bool Print { get; }
+        private StringBuilder Builder { get; }
         private string OutputPath { get; }
         private Action<string> OutputHandler { get; }
+        public bool DoNotWriteAnything { get; }
         #endregion
 
         #region Default Output
         public void DefaultOutputHandler(string text)
         {
+            string dateTime = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss");
+            string logText = $"[{dateTime}] {text}";
             if (Print)
             {
                 Console.SetOut(Previous);
-                Console.Write(text);
+                Console.Write(logText);
                 Console.SetOut(this);
             }
-            if (OutputPath != null)
-                File.AppendAllText(OutputPath, text);
+            if (!DoNotWriteAnything && OutputPath != null)
+                File.AppendAllText(OutputPath, logText);
+            if (Builder != null)
+                Builder.Append(logText);
         }
+        public override string ToString()
+            => Builder.ToString().TrimEnd();
         #endregion
 
         #region Writing Routines

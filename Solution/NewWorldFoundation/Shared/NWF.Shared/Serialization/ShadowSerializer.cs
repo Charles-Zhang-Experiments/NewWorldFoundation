@@ -41,7 +41,7 @@ namespace NWF.Shared.Serialization
                 string relativePath = Path.GetRelativePath(sourceFolder, file.Path);
                 var newPath = Path.Combine(destinationFolder, relativePath);
 
-                File.Copy(file.Path, newPath);
+                File.Copy(file.Path, newPath, true);    // Overwrite original if any
                 created.Add(new Entry(file.Size, file.DateModified, file.Filename, newPath, EntryType.File));
             }
 

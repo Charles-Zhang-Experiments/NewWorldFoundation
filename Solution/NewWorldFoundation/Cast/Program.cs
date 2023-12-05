@@ -1,5 +1,6 @@
 ﻿using NWF.Shared.Helpers;
 using NWF.Shared.Serialization;
+using NWF.Shared.Utilities;
 
 namespace Cast
 {
@@ -16,6 +17,8 @@ namespace Cast
     );
     internal class Program
     {
+        private const string CastLogFileName = "NFW Cast.log";
+
         static void Main(string[] args)
         {
             if (CLI.AutoParse(args, out CastArguments cast))
@@ -26,7 +29,9 @@ namespace Cast
                     Console.WriteLine("Destination is not empty! Use --IgnoreWarning to suppress this.");
                 else
                 {
+                    using Logger logger = new(null, true, true, doNotWriteAnything: true);
                     ShadowSerializer.MakeShadowCopy(cast.Input, cast.Output);
+                    File.WriteAllText(Path.Combine(cast.Output, CastLogFileName), logger.ToString());
                 }
             }
         }
