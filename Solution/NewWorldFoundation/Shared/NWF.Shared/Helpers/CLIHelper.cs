@@ -21,6 +21,34 @@ namespace NWF.Shared.Helpers
 
     public static class CLI
     {
+        #region Shorthand Entry
+        /// <summary>
+        /// Returns whether caller should continue
+        /// </summary>
+        public static bool AutoParse<TType>(string[] arguments, out TType result)
+        {
+            result = Parse<TType>(arguments);
+
+            if (arguments.Length == 0 || (GetAllValues(result).TryGetValue("Help", out object help) && (bool)help))
+            {       
+                Console.WriteLine(Document<TType>());
+                return false;
+            }
+            return true;
+        }
+        public static Dictionary<string, object>GetAllValues<TType>(TType instance)
+        {
+            Type type = instance.GetType();
+            var properties = type.GetProperties()
+                .ToDictionary(p => p.Name.ToLower(), p => p.GetValue(instance));
+            var attributes = type.GetFields()
+                .ToDictionary(p => p.Name.ToLower(), p => p.GetValue(instance));
+            return properties
+                .Concat(attributes)
+                .ToDictionary();
+        }
+        #endregion
+
         #region Main Methods
         /// <summary>
         /// Maps properties in order.

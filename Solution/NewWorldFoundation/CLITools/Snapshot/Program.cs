@@ -11,7 +11,9 @@ namespace Snapshot
         [Comment("Input folder path.")]
         string Input,
         [Comment("Output file path. If text ending, save as text file, otherwise save a compressed binary archive.")]
-        string Output
+        string Output,
+        [Comment("Keep text files < 1Mb.")]
+        bool KeepTextFiles
     );
     internal class Program
     {

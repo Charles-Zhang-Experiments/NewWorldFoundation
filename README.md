@@ -23,9 +23,26 @@ Example:
 
 ```yaml
 Mirrors:
-	- Master: C:\Projects
-	  Copy: 
+  - Master: C:\Projects
+    Copy: 
+    Condition: Exact|Fragment|Stash|Transient
 ```
+
+Conditions:
+
+|Condition|Meaning|
+|-|-|
+|Transient|Save as Exact except it only backs up text files (default txt md and code files) and other optional types of smaller than some threshold file size (default 1Mb)|
+
+Notice below configuration-time and runtime behaviors:
+
+- All mirror items can be either on a file basis or folder basis
+- More specific rules overwrite general rules, use option to issue warning and halt back up process instead
+- Existing files will be replaced with newer files
+- WE WILL NOT AUTOMATICALLY DETECT FILE/FOLDER MOVEMENTS OUTSIDE OF SPECIFIED LOCATION because of the nature of specific folder/file mapping, also see next point
+- When marked as Full or Partial condition, we will make deductions on potential file movements on the destination. "Backup" condition will not delete anything in the destination.
+
+Would be nice if we can draw some kind of tree or flow chart to indicate where data is flowing into where. Actually make a data instead, it's clearer.
 
 ## Components
 
