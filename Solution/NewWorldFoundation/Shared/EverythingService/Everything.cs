@@ -171,10 +171,10 @@ namespace EverythingService
         #endregion
 
         #region Methods
-        public static IEnumerable<Result> Search(string query)
+        public static IEnumerable<Result> Search(string everythingQuery)
         {
             // Set the search
-            Everything_SetSearchW(query);
+            Everything_SetSearchW(everythingQuery);
             Everything_SetRequestFlags(EVERYTHING_REQUEST_FILE_NAME | EVERYTHING_REQUEST_PATH | EVERYTHING_REQUEST_DATE_MODIFIED | EVERYTHING_REQUEST_SIZE);
             Everything_SetSort(EVERYTHING_SORT_PATH_ASCENDING);
 

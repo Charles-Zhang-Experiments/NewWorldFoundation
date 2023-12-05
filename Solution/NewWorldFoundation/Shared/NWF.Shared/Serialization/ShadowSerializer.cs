@@ -13,18 +13,18 @@ namespace NWF.Shared.Serialization
         /// <summary>
         /// Returns created entries
         /// </summary>
-        public static Entry[] MakeShadowCopy(string sourceFolder, string destinationFolder, string[] fileTypesFilter = null, int fileSizeThresholdInMb = 1)
+        public static Entry[] MakeShadowCopy(string sourceFolder, string destinationFolder, string[] fileTypesFilter = null, int fileSizeThresholdInMb = 1, bool produceSnapshot = true)
         {
             if (!Directory.Exists(sourceFolder))
                 throw new ArgumentException($"Invalid directory: {sourceFolder}");
 
-            var sourceEntries = FileSystemHelper.GetEntries(sourceFolder);
-            var destinationEntries = FileSystemHelper.GetEntries(destinationFolder);
+            Entry[] sourceEntries = FileSystemHelper.GetEntries(sourceFolder).ToArray();
+            Entry[] destinationEntries = FileSystemHelper.GetEntries(destinationFolder).ToArray();
             fileTypesFilter ??= [".txt", ".md", ".cs"];
             List<Entry> created = [];
 
             // Duplicate folder structure
-            foreach (Entry directory in sourceEntries.Where(e => e.IsFolder)) // TODO: Why on earth this iteration is not working?
+            foreach (Entry directory in sourceEntries.Where(e => e.IsFolder))
             {
                 string relativePath = Path.GetRelativePath(sourceFolder, directory.Path);
                 if (!destinationEntries.Any(e => Path.GetRelativePath(destinationFolder, e.Path) == relativePath))
@@ -33,7 +33,6 @@ namespace NWF.Shared.Serialization
                     Directory.CreateDirectory(newDirectory);
                     created.Add(new Entry(0, DateTime.Now, Path.GetFileName(directory.Filename), newDirectory, EntryType.Folder));
                 }
-                Console.WriteLine(relativePath);
             }
 
             // Duplicate files
@@ -45,6 +44,10 @@ namespace NWF.Shared.Serialization
                 File.Copy(file.Path, newPath);
                 created.Add(new Entry(file.Size, file.DateModified, file.Filename, newPath, EntryType.File));
             }
+
+            // Generate snapshot
+            if (produceSnapshot)
+                SnapshotSerializer.Save(Path.Combine(destinationFolder, "_Snapshot.csv"), sourceEntries);
 
             return created.ToArray();
         }

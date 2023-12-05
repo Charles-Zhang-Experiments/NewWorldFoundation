@@ -1,5 +1,7 @@
-﻿using K4os.Compression.LZ4.Streams;
+﻿using CsvHelper;
+using K4os.Compression.LZ4.Streams;
 using NWF.Shared.Types;
+using System.Globalization;
 using System.Text;
 
 namespace NWF.Shared.Serialization
@@ -8,6 +10,46 @@ namespace NWF.Shared.Serialization
     {
         #region Methods
         public static void Save(string filepath, Entry[] entries, bool compressed = true)
+        {
+            string extension = Path.GetExtension(filepath);
+            switch (extension)
+            {
+                case ".csv":
+                    SaveCSV(filepath, entries);
+                    break;
+                case ".lz4":
+                    SaveLZ4(filepath, entries, compressed);
+                    break;
+                default:
+                    throw new ArgumentException($"Invalid extension: {extension}");
+            }
+        }
+        public static Entry[] Load(string filepath, bool compressed = true)
+        {
+            string extension = Path.GetExtension(filepath);
+            return extension switch
+            {
+                ".csv" => LoadCSV(filepath),
+                ".lz4" => LoadLZ4(filepath, compressed),
+                _ => throw new ArgumentException($"Invalid extension: {extension}"),
+            };
+        }
+        #endregion
+
+        #region Routines
+        private static void SaveCSV(string filepath, Entry[] entries)
+        {
+            using StreamWriter writer = new(filepath);
+            using CsvWriter csv = new(writer, CultureInfo.InvariantCulture);
+            csv.WriteRecords(entries);
+        }
+        private static Entry[] LoadCSV(string filepath)
+        {
+            using StreamReader reader = new(filepath);
+            using CsvReader csv = new(reader, CultureInfo.InvariantCulture);
+            return csv.GetRecords<Entry>().ToArray();
+        }
+        private static void SaveLZ4(string filepath, Entry[] entries, bool compressed)
         {
             if (compressed)
             {
@@ -22,7 +64,7 @@ namespace NWF.Shared.Serialization
                 WriteToStream(writer, entries);
             }
         }
-        public static Entry[] Load(string filepath, bool compressed = true)
+        private static Entry[] LoadLZ4(string filepath, bool compressed)
         {
             if (compressed)
             {
@@ -39,7 +81,7 @@ namespace NWF.Shared.Serialization
         }
         #endregion
 
-        #region Routines
+        #region Secondary Routines
         private static void WriteToStream(BinaryWriter writer, Entry[] data)
         {
             writer.Write(data.Length);
