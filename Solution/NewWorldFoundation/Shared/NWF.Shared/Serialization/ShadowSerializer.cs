@@ -13,7 +13,7 @@ namespace NWF.Shared.Serialization
         /// <summary>
         /// Returns created entries
         /// </summary>
-        public static Entry[] MakeShadowCopy(string sourceFolder, string destinationFolder, string[] fileTypesFilter = null, int fileSizeThresholdInMb = 1, bool produceSnapshot = true)
+        public static Entry[] MakeShadowCopy(string sourceFolder, string destinationFolder, bool makeEmptyFiles = true, string[] fileTypesFilter = null, int fileSizeThresholdInMb = 1, bool produceSnapshot = true)
         {
             if (!Directory.Exists(sourceFolder))
                 throw new ArgumentException($"Invalid directory: {sourceFolder}");
@@ -36,12 +36,18 @@ namespace NWF.Shared.Serialization
             }
 
             // Duplicate files
-            foreach (Entry file in sourceEntries.Where(e => e.IsFile && fileTypesFilter.Contains(Path.GetExtension(e.Filename).ToLower())))
+            foreach (Entry file in sourceEntries.Where(e => e.IsFile))
             {
                 string relativePath = Path.GetRelativePath(sourceFolder, file.Path);
                 var newPath = Path.Combine(destinationFolder, relativePath);
 
-                File.Copy(file.Path, newPath, true);    // Overwrite original if any
+                if (fileTypesFilter.Contains(Path.GetExtension(file.Filename).ToLower()))
+                    // Make copy of text files
+                    File.Copy(file.Path, newPath, true);    // Overwrite original if any
+                else if (makeEmptyFiles && !File.Exists(newPath))
+                    // Make empty files (just copy file name but not content)
+                    File.Create(newPath);
+
                 created.Add(new Entry(file.Size, file.DateModified, file.Filename, newPath, EntryType.File));
             }
 
