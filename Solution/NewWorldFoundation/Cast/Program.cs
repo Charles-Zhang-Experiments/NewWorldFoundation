@@ -30,6 +30,7 @@ namespace Cast
                 else
                 {
                     using Logger logger = new(null, true, true, doNotWriteAnything: true);
+                    Console.WriteLine($"Cast on: {DateTime.Now:yyyy-MM-dd hh:mm:ss}");
                     ShadowSerializer.MakeShadowCopy(cast.Input, cast.Output);
                     File.WriteAllText(Path.Combine(cast.Output, CastLogFileName), logger.ToString());
                 }
