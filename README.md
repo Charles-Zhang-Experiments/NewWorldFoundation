@@ -48,6 +48,8 @@ Would be nice if we can draw some kind of tree or flow chart to indicate where d
 
 Each individual component shall be used as Pure library or as CLI tool.
 
+* (Todo) Indexer: Creative viewable (binary or HTML) indexer for images and main items (useful for situations like Creative Assets and Sketches) in a single file.
+
 ## Abstraction & Concepts
 
 To the tool, it just sees disk locations, and maybe network locations (through drivers), and it provides manipulation for those. It identifies a Master and a Copy, where the copy will deligently mirror the exact content and structure of master, under a root.

@@ -1,6 +1,7 @@
 ﻿using NWF.Shared.FIleSystem;
 using NWF.Shared.Helpers;
 using NWF.Shared.Serialization;
+using NWF.Shared.Utilities;
 
 namespace Snapshot
 {
@@ -19,16 +20,18 @@ namespace Snapshot
     {
         static void Main(string[] args)
         {
-            SnapshotArguments snapshop = CLI.Parse<SnapshotArguments>(args);
+            SnapshotArguments snapshot = CLI.Parse<SnapshotArguments>(args);
 
-            if (args.Length == 0 || snapshop.Help)
+            if (args.Length == 0 || snapshot.Help)
                 Console.WriteLine(CLI.Document<SnapshotArguments>());
-            else if (!Directory.Exists(snapshop.Input))
+            else if (!Directory.Exists(snapshot.Input))
                 Console.WriteLine("Not a valid input folder.");
             else
             {
-                var entries = FileSystemHelper.GetEntries(snapshop.Input);
-                SnapshotSerializer.Save(snapshop.Output, entries.ToArray());
+                using Logger logger = new(null, true, true, doNotWriteAnything: true);
+                var entries = FileSystemHelper.GetEntries(snapshot.Input);
+                SnapshotSerializer.Save(snapshot.Output, entries.ToArray());
+                File.WriteAllText($"{snapshot.Output}.log", logger.ToString());
             }
         }
     }
