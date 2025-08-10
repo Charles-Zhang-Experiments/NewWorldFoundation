@@ -3,6 +3,9 @@ using System.Text;
 
 namespace EverythingService
 {
+    /// <remarks>
+    /// Source: https://github.com/dipique/everythingio/blob/master/Everything.cs
+    /// </remarks>
     public static class Everything
     {
         #region API Constants
