@@ -63,3 +63,7 @@ Utility:
   * Shorthand for Somewhere(2) metadata files.
   * Simple plain Key-value format.
   * See `OneDrive\ProjectNine (Experiments)\The Walking Simulator\Game\_ProjectNine\NFC\Assets\Scenes\NFC\Main\SeventhFloor.sm` for example.
+
+## References
+
+* Related: https://github.com/chaojian-zhang/EverythingKMD/blob/main/EverythingKMD/EverythingKMDInterface.cs
