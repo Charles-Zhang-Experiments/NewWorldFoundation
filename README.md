@@ -53,3 +53,13 @@ Each individual component shall be used as Pure library or as CLI tool.
 ## Abstraction & Concepts
 
 To the tool, it just sees disk locations, and maybe network locations (through drivers), and it provides manipulation for those. It identifies a Master and a Copy, where the copy will deligently mirror the exact content and structure of master, under a root.
+
+## TODO
+
+Utility:
+
+- [ ] Implement Everything Service on `.sm` files.
+  * Used to add annotations (e.g. tags) to any file system entry.
+  * Shorthand for Somewhere(2) metadata files.
+  * Simple plain Key-value format.
+  * See `OneDrive\ProjectNine (Experiments)\The Walking Simulator\Game\_ProjectNine\NFC\Assets\Scenes\NFC\Main\SeventhFloor.sm` for example.
